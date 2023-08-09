@@ -4,13 +4,13 @@
   "columnDefs": [
     {
       "name": "Name",
-      "field": [ "firstName", "lastName" ],
+      "field": ["firstName", "lastName"],
       "properties": {
         "renderer": {
           "type": "text"
         }
       }
-    },   
+    },
     {
       "name": "DOB",
       "field": "dob",
@@ -39,12 +39,9 @@
           "city": "addressCity",
           "region": "addressRegion",
           "postal": "addressPostal",
-          "country": "addressCountry" 
-
+          "country": "addressCountry"
         }
       }
     }
   ]
-
-  
 }

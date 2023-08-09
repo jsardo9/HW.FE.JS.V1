@@ -7,7 +7,7 @@
         "firstName": "John",
         "lastName": "Doe",
         "dob": "1980-01-10",
-        "skills": [ "JavaScript", "React" ],
+        "skills": ["JavaScript", "React"],
         "addressStreet": "1 Main Street",
         "addressCity": "New York",
         "addressRegion": "NY",
@@ -19,7 +19,7 @@
         "firstName": "Jane",
         "lastName": "Doe",
         "dob": "1981-11-05",
-        "skills": [ "HTML", "CSS" ],
+        "skills": ["HTML", "CSS"],
         "addressStreet": "1 Main Street",
         "addressCity": "New York",
         "addressRegion": "NY",
@@ -31,7 +31,7 @@
         "firstName": "Bob",
         "lastName": "Doe",
         "dob": "1975-01-01",
-        "skills": [ "JavaScript", "Vue", "Angular", "HTML", "CSS" ],
+        "skills": ["JavaScript", "Vue", "Angular", "HTML", "CSS"],
         "addressStreet": "2 Main Street",
         "addressCity": "New York",
         "addressRegion": "NY",
@@ -55,7 +55,7 @@
         "firstName": "Jenny",
         "lastName": "Doe",
         "dob": "Jan",
-        "skills": [ "NodeJS", "C#" ],
+        "skills": ["NodeJS", "C#"],
         "addressStreet": "4 Main Street",
         "addressCity": "New York",
         "addressRegion": "NY",
@@ -64,7 +64,4 @@
       }
     ]
   }
-  
-
-
 }
