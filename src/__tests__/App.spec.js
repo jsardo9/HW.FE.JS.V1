@@ -40,6 +40,7 @@ describe('App.vue', () => {
         expect(tableComponent.props('title')).toBe(wrapper.vm.gridLayout.title)
         expect(tableComponent.props('description')).toBe(wrapper.vm.gridLayout.description)
         expect(tableComponent.props('columnDefs')).toBe(wrapper.vm.gridLayout.columnDefs)
+        expect(tableComponent.props('styling')).toBe(wrapper.vm.gridLayout.styling)
         expect(tableComponent.props('data')).toBe(wrapper.vm.dataEntries)
     })
 })

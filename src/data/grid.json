@@ -4,7 +4,10 @@
   "columnDefs": [
     {
       "name": "Name",
-      "field": ["firstName", "lastName"],
+      "field": [
+        "firstName",
+        "lastName"
+      ],
       "properties": {
         "renderer": {
           "type": "text"
@@ -43,5 +46,9 @@
         }
       }
     }
-  ]
+  ],
+  "styling": {
+    "background-color": "Beige",
+    "text-color": "Chocolate"
+  }
 }
