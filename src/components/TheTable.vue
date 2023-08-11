@@ -12,14 +12,14 @@ defineProps({
   <h1>{{ title }}</h1>
   <p>{{ description }}</p>
   <table>
-    <thead :style="{ backgroundColor: styling['background-color'], color: styling['text-color'] }">
+    <thead :style="{ backgroundColor: styling?.['background-color'], color: styling?.['text-color'] }">
       <tr>
         <th v-for="def in columnDefs" :key="def['name']">
           {{ def['name'] }}
         </th>
       </tr>
     </thead>
-    <tbody :style="{ backgroundColor: styling['background-color'], color: styling['text-color'] }">
+    <tbody :style="{ backgroundColor: styling?.['background-color'], color: styling?.['text-color'] }">
       <template v-if="data">
         <!-- generating each entry in the table -->
         <tr v-for="entry in data" :key="entry.id">
@@ -35,8 +35,11 @@ defineProps({
         </tr>
       </template>
       <template v-else>
+        <!-- Loading placeholder while waiting for data-->
         <tr>
-          <td :colspan="columnDefs.length"><b>Loading...</b></td>
+          <td :colspan="columnDefs.length">
+            <b>Loading... <img src="@/assets/loading.gif" style="width: 15px; height: 15px;" /></b>
+          </td>
         </tr>
       </template>
     </tbody>

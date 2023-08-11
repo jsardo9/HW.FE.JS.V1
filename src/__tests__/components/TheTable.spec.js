@@ -44,4 +44,13 @@ describe('table', () => {
     expect(tableBody.attributes().style).toContain('background-color: Beige');
     expect(tableBody.attributes().style).toContain('color: Blue');
   })
+
+  it('renders loading icon properly', () => {
+    const columnDefs = [{ name: 'Name' }, { name: 'DOB' }, { name: 'Skills' }, { name: 'Address' }]
+    const wrapper = mount(TheTable, { props: { columnDefs: columnDefs } })
+
+    // Checking for loading icon element
+    const loadingIcon = wrapper.find('tbody').find('img');
+    expect(loadingIcon.attributes().src).toBe('/src/assets/loading.gif');
+  })
 })
