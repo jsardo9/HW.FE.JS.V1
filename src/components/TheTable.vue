@@ -1,47 +1,63 @@
 <script setup>
-
 defineProps({
-    title: String,
-    description: String,
-    columnDefs: Array,
-    data: Array
+  title: String,
+  description: String,
+  columnDefs: Array,
+  data: Array
 })
-
 </script>
 
 <template>
-    <h1>{{ title }}</h1>
-    <p>{{ description }}</p>
-    <table>
-        <thead>
-            <tr>
-                <th v-for="def in columnDefs" :key="def['name']">
-                    {{ def["name"] }}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- TODO: RENDER DATA -->
-        </tbody>
-    </table>
+  <h1>{{ title }}</h1>
+  <p>{{ description }}</p>
+  <table>
+    <thead>
+      <tr>
+        <th v-for="def in columnDefs" :key="def['name']">
+          {{ def['name'] }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <template v-if="data">
+        <!-- generating each entry in the table -->
+        <tr v-for="entry in data" :key="entry.id">
+          <td v-for="key in columnDefs.map((def) => def.name)">
+            <!-- Replacing \n with linebreaks if input is a string -->
+            <template v-if="typeof entry[key] === 'string'">
+              <span v-html="entry[key].replace(/\n/g, '<br>')"></span>
+            </template>
+            <template v-else>
+              {{ entry[key] }}
+            </template>
+          </td>
+        </tr>
+      </template>
+      <template v-else>
+        <tr>
+          <td :colspan="columnDefs.length"><b>Loading...</b></td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
 </template>
-
 
 <style>
 table {
-    border: 2px solid black;
-    border-radius: 3px;
-    background-color: black;
+  border: 2px solid black;
+  border-radius: 3px;
+  background-color: black;
 }
 
 th {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 th,
 td {
-    min-width: 120px;
-    padding: 10px 20px;
-    background-color: white;
+  min-width: 120px;
+  padding: 10px 20px;
+  background-color: white;
+  text-align: center;
 }
 </style>
