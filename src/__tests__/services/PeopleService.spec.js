@@ -1,4 +1,4 @@
-import { getPeople } from '../PeopleService';
+import { getPeople } from 'src/services/PeopleService';
 import { vi, describe, it, expect } from 'vitest';
 
 describe('PeopleService', () => {
