@@ -3,7 +3,8 @@ defineProps({
   title: String,
   description: String,
   columnDefs: Array,
-  data: Array
+  data: Array,
+  styling: Object
 })
 </script>
 
@@ -11,14 +12,14 @@ defineProps({
   <h1>{{ title }}</h1>
   <p>{{ description }}</p>
   <table>
-    <thead>
+    <thead :style="{ backgroundColor: styling['background-color'], color: styling['text-color'] }">
       <tr>
         <th v-for="def in columnDefs" :key="def['name']">
           {{ def['name'] }}
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody :style="{ backgroundColor: styling['background-color'], color: styling['text-color'] }">
       <template v-if="data">
         <!-- generating each entry in the table -->
         <tr v-for="entry in data" :key="entry.id">
@@ -53,11 +54,16 @@ th {
   font-weight: bold;
 }
 
+thead,
+tbody {
+  background-color: white;
+  color: black;
+}
+
 th,
 td {
   min-width: 120px;
   padding: 10px 20px;
-  background-color: white;
   text-align: center;
 }
 </style>

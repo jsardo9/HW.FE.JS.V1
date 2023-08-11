@@ -69,5 +69,5 @@ function buildField(person, column) {
 
 <template>
   <TheTable :title="gridLayout.title" :description="gridLayout.description" :columnDefs="gridLayout.columnDefs"
-    :data="dataEntries"></TheTable>
+    :styling="gridLayout.styling" :data="dataEntries"></TheTable>
 </template>
