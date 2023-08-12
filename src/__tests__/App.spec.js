@@ -1,89 +1,92 @@
 import { mount } from '@vue/test-utils'
-import { vi, describe, it, expect } from 'vitest';
+import { vi, describe, it, expect } from 'vitest'
 import App from 'src/App.vue'
 import TheTable from '@/components/TheTable.vue'
 import { getPeople } from '@/services/PeopleService'
 
 // Mocking the getPeople function
 vi.mock('@/services/PeopleService', () => ({
-    getPeople: vi.fn()
+  getPeople: vi.fn()
 }))
 
 describe('App.vue', () => {
-    it('fetches and displays dataEntries correctly', async () => {
-        // Mocking the data from the API
-        const mockData = [{
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Doe",
-            "dob": "1980-01-10",
-            "skills": ["JavaScript", "React"],
-            "addressStreet": "1 Main Street",
-            "addressCity": "New York",
-            "addressRegion": "NY",
-            "addressPostal": "10001",
-            "addressCountry": "USA"
-        }
-        ]
-        getPeople.mockResolvedValue(mockData)
+  it('fetches and displays dataEntries correctly', async () => {
+    // Mocking the data from the API
+    const mockData = [
+      {
+        id: 1,
+        firstName: 'John',
+        lastName: 'Doe',
+        dob: '1980-01-10',
+        skills: ['JavaScript', 'React'],
+        addressStreet: '1 Main Street',
+        addressCity: 'New York',
+        addressRegion: 'NY',
+        addressPostal: '10001',
+        addressCountry: 'USA'
+      }
+    ]
+    getPeople.mockResolvedValue(mockData)
 
-        const wrapper = mount(App)
+    const wrapper = mount(App)
 
-        // Wait for the dataEntries to be populated
-        await wrapper.vm.$nextTick()
+    // Wait for the dataEntries to be populated
+    await wrapper.vm.$nextTick()
+    await getPeople()
 
-        // Ensure that the TheTable component is rendered
-        const tableComponent = wrapper.findComponent(TheTable)
-        expect(tableComponent.exists()).toBeTruthy()
+    // Ensure that the TheTable component is rendered
+    const tableComponent = wrapper.findComponent(TheTable)
+    expect(tableComponent.exists()).toBeTruthy()
 
-        // Ensure that the table component receives the correct props
-        expect(tableComponent.props('title')).toBe(wrapper.vm.gridLayout.title)
-        expect(tableComponent.props('description')).toBe(wrapper.vm.gridLayout.description)
-        expect(tableComponent.props('columnDefs')).toBe(wrapper.vm.gridLayout.columnDefs)
-        expect(tableComponent.props('styling')).toBe(wrapper.vm.gridLayout.styling)
-        expect(tableComponent.props('data')).toBe(wrapper.vm.dataEntries)
-    })
+    // Ensure that the table component receives the correct props
+    expect(tableComponent.props('title')).toBe(wrapper.vm.gridLayout.title)
+    expect(tableComponent.props('description')).toBe(wrapper.vm.gridLayout.description)
+    expect(tableComponent.props('columnDefs')).toBe(wrapper.vm.gridLayout.columnDefs)
+    expect(tableComponent.props('styling')).toBe(wrapper.vm.gridLayout.styling)
+    expect(tableComponent.props('data')).toBe(wrapper.vm.dataEntries)
+  })
 
-    it('does not render duplicates', async () => {
-        // Mocking the data from the API
-        const mockData = [{
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Doe",
-            "dob": "1980-01-10",
-            "skills": ["JavaScript", "React"],
-            "addressStreet": "1 Main Street",
-            "addressCity": "New York",
-            "addressRegion": "NY",
-            "addressPostal": "10001",
-            "addressCountry": "USA"
-        },
-        {
-            "id": 2,
-            "firstName": "John",
-            "lastName": "Doe",
-            "dob": "1980-01-10",
-            "skills": ["JavaScript", "React"],
-            "addressStreet": "1 Main Street",
-            "addressCity": "New York",
-            "addressRegion": "NY",
-            "addressPostal": "10001",
-            "addressCountry": "USA"
-        }
-        ]
-        getPeople.mockResolvedValue(mockData)
+  it('does not render duplicates', async () => {
+    // Mocking the data from the API
+    const mockData = [
+      {
+        id: 1,
+        firstName: 'John',
+        lastName: 'Doe',
+        dob: '1980-01-10',
+        skills: ['JavaScript', 'React'],
+        addressStreet: '1 Main Street',
+        addressCity: 'New York',
+        addressRegion: 'NY',
+        addressPostal: '10001',
+        addressCountry: 'USA'
+      },
+      {
+        id: 2,
+        firstName: 'John',
+        lastName: 'Doe',
+        dob: '1980-01-10',
+        skills: ['JavaScript', 'React'],
+        addressStreet: '1 Main Street',
+        addressCity: 'New York',
+        addressRegion: 'NY',
+        addressPostal: '10001',
+        addressCountry: 'USA'
+      }
+    ]
+    getPeople.mockResolvedValue(mockData)
 
-        const wrapper = mount(App)
+    const wrapper = mount(App)
 
-        // Wait for the dataEntries to be populated
-        await wrapper.vm.$nextTick();
-        await getPeople();
+    // Wait for the dataEntries to be populated
+    await wrapper.vm.$nextTick()
+    await getPeople()
 
-        // Ensure that the TheTable component is rendered
-        const tableComponent = wrapper.findComponent(TheTable)
-        expect(tableComponent.exists()).toBeTruthy()
+    // Ensure that the TheTable component is rendered
+    const tableComponent = wrapper.findComponent(TheTable)
+    expect(tableComponent.exists()).toBeTruthy()
 
-        expect(tableComponent.props('data').length).toBe(1)
-        expect(tableComponent.props('data')[0]).toHaveProperty('Name', "John Doe")
-    })
+    expect(tableComponent.props('data').length).toBe(1)
+    expect(tableComponent.props('data')[0]).toHaveProperty('Name', 'John Doe')
+  })
 })
