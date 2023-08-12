@@ -43,4 +43,47 @@ describe('App.vue', () => {
         expect(tableComponent.props('styling')).toBe(wrapper.vm.gridLayout.styling)
         expect(tableComponent.props('data')).toBe(wrapper.vm.dataEntries)
     })
+
+    it('does not render duplicates', async () => {
+        // Mocking the data from the API
+        const mockData = [{
+            "id": 1,
+            "firstName": "John",
+            "lastName": "Doe",
+            "dob": "1980-01-10",
+            "skills": ["JavaScript", "React"],
+            "addressStreet": "1 Main Street",
+            "addressCity": "New York",
+            "addressRegion": "NY",
+            "addressPostal": "10001",
+            "addressCountry": "USA"
+        },
+        {
+            "id": 2,
+            "firstName": "John",
+            "lastName": "Doe",
+            "dob": "1980-01-10",
+            "skills": ["JavaScript", "React"],
+            "addressStreet": "1 Main Street",
+            "addressCity": "New York",
+            "addressRegion": "NY",
+            "addressPostal": "10001",
+            "addressCountry": "USA"
+        }
+        ]
+        getPeople.mockResolvedValue(mockData)
+
+        const wrapper = mount(App)
+
+        // Wait for the dataEntries to be populated
+        await wrapper.vm.$nextTick();
+        await getPeople();
+
+        // Ensure that the TheTable component is rendered
+        const tableComponent = wrapper.findComponent(TheTable)
+        expect(tableComponent.exists()).toBeTruthy()
+
+        expect(tableComponent.props('data').length).toBe(1)
+        expect(tableComponent.props('data')[0]).toHaveProperty('Name', "John Doe")
+    })
 })
