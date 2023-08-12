@@ -15,13 +15,18 @@ getPeople().then((data) => {
 // Parsing raw data
 function parseData(data) {
   const entries = []
+  // Keeping a set of people to prevent duplicates
+  const nameSet = new Set();
   // Creating table entry for each data entry
-  for (const item of data) {
+  for (const person of data) {
     const currentEntry = {}
     // retreiving entry's data based on column definitions
     for (const column of gridLayout.columnDefs) {
-      currentEntry[column.name] = buildField(item, column)
+      currentEntry[column.name] = buildField(person, column)
     }
+    // If this name is duplicate skip it
+    if (nameSet.has(currentEntry["Name"])) continue;
+    nameSet.add(currentEntry["Name"]);
     entries.push(currentEntry)
   }
   return entries
