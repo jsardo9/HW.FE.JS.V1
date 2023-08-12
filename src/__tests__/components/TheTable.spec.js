@@ -10,7 +10,9 @@ describe('table', () => {
   })
 
   it('renders description properly', () => {
-    const wrapper = mount(TheTable, { props: { description: 'Test Description', columnDefs: [], styling: {} } })
+    const wrapper = mount(TheTable, {
+      props: { description: 'Test Description', columnDefs: [], styling: {} }
+    })
     expect(wrapper.text()).toContain('Test Description')
   })
 
@@ -29,20 +31,20 @@ describe('table', () => {
   it('renders styles properly', () => {
     const columnDefs = [{ name: 'Name' }, { name: 'DOB' }, { name: 'Skills' }, { name: 'Address' }]
     const styling = {
-      "background-color": "Beige",
-      "text-color": "Blue"
-    };
+      'background-color': 'Beige',
+      'text-color': 'Blue'
+    }
     const wrapper = mount(TheTable, { props: { columnDefs: columnDefs, styling: styling } })
 
     // Checking for correct header styling
-    const tableHeader = wrapper.find('thead');
-    expect(tableHeader.attributes().style).toContain('background-color: Beige');
-    expect(tableHeader.attributes().style).toContain('color: Blue');
+    const tableHeader = wrapper.find('thead')
+    expect(tableHeader.attributes().style).toContain('background-color: Beige')
+    expect(tableHeader.attributes().style).toContain('color: Blue')
 
     // Checking for correct body styling
-    const tableBody = wrapper.find('tbody');
-    expect(tableBody.attributes().style).toContain('background-color: Beige');
-    expect(tableBody.attributes().style).toContain('color: Blue');
+    const tableBody = wrapper.find('tbody')
+    expect(tableBody.attributes().style).toContain('background-color: Beige')
+    expect(tableBody.attributes().style).toContain('color: Blue')
   })
 
   it('renders loading icon properly', () => {
@@ -50,7 +52,7 @@ describe('table', () => {
     const wrapper = mount(TheTable, { props: { columnDefs: columnDefs } })
 
     // Checking for loading icon element
-    const loadingIcon = wrapper.find('tbody').find('img');
-    expect(loadingIcon.attributes().src).toBe('/src/assets/loading.gif');
+    const loadingIcon = wrapper.find('tbody').find('img')
+    expect(loadingIcon.attributes().src).toBe('/src/assets/loading.gif')
   })
 })
