@@ -55,4 +55,24 @@ describe('table', () => {
     const loadingIcon = wrapper.find('tbody').find('img')
     expect(loadingIcon.attributes().src).toBe('/src/assets/loading.gif')
   })
+
+  it('only renders current page', async () => {
+    const columnDefs = [{ name: 'Name' }]
+    const data = [{ Name: 'John Doe' }, { Name: 'Jane Doe' }, { Name: 'Bob Doe' }]
+    const wrapper = mount(TheTable, { props: { columnDefs: columnDefs, data: data } })
+
+    // Checking first page for corrent rendering
+    let entries = wrapper.find('tbody').findAll('tr')
+    expect(entries.length).toBe(2)
+    expect(entries[0].text()).toContain('John Doe')
+
+    // Clicking next page button
+    const button = wrapper.find('#nextPageButton')
+    await button.trigger('click')
+
+    // Checking for correct next page rendering
+    entries = wrapper.find('tbody').findAll('tr')
+    expect(entries.length).toBe(1)
+    expect(entries[0].text()).toContain('Bob Doe')
+  })
 })

@@ -1,16 +1,38 @@
 <script setup>
-defineProps({
+import { ref } from 'vue'
+
+const props = defineProps({
   title: String,
   description: String,
   columnDefs: Array,
   data: Array,
   styling: Object
 })
+
+const currentPage = ref(1)
+const pageSize = 2
+
+// Function for changing to next page
+function nextPage() {
+  if (currentPage.value * pageSize < props.data.length) currentPage.value++
+}
+
+// Function for changing to previous page
+function prevPage() {
+  if (currentPage.value > 1) currentPage.value--
+}
+
+// Returning only data relevant to current page
+function pageData() {
+  const startIndex = (currentPage.value - 1) * pageSize
+  return props.data.slice(startIndex, startIndex + pageSize)
+}
 </script>
 
 <template>
   <h1>{{ title }}</h1>
   <p>{{ description }}</p>
+  <p>Current Page: {{ currentPage }}</p>
   <table>
     <thead
       :style="{ backgroundColor: styling?.['background-color'], color: styling?.['text-color'] }"
@@ -26,7 +48,7 @@ defineProps({
     >
       <template v-if="data">
         <!-- generating each entry in the table -->
-        <tr v-for="entry in data" :key="entry.id">
+        <tr v-for="entry in pageData()" :key="entry.id">
           <td v-for="key in columnDefs.map((def) => def.name)" :key="key">
             <!-- Replacing \n with linebreaks if input is a string -->
             <template v-if="typeof entry[key] === 'string'">
@@ -48,6 +70,11 @@ defineProps({
       </template>
     </tbody>
   </table>
+  <p>
+    <!-- Buttons for page changes -->
+    <button id="previousPageButton" @click="prevPage">Previous</button>
+    <button id="nextPageButton" @click="nextPage">Next</button>
+  </p>
 </template>
 
 <style>
