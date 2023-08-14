@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 
 const props = defineProps({
   title: String,
@@ -10,11 +10,34 @@ const props = defineProps({
 })
 
 const currentPage = ref(1)
+const search = ref('')
+const filteredData = ref([])
 const pageSize = 2
+
+// Updating filteredData if data is changed
+watchEffect(() => {
+  filteredData.value = props.data
+})
+
+// Updating filter if search is changed
+watchEffect(() => {
+  if (props.data === null || props.data === undefined) return // safety check
+  currentPage.value = 1
+  const currFilter = []
+  for (const entry of props.data) {
+    // Searcching first and last names for matches
+    const [firstName, lastName] = entry['Name'].toLowerCase().split(' ')
+    const searchString = search.value.toLowerCase()
+    if (firstName.startsWith(searchString) || lastName.startsWith(searchString)) {
+      currFilter.push(entry)
+    }
+  }
+  filteredData.value = currFilter
+})
 
 // Function for changing to next page
 function nextPage() {
-  if (currentPage.value * pageSize < props.data.length) currentPage.value++
+  if (currentPage.value * pageSize < filteredData.value.length) currentPage.value++
 }
 
 // Function for changing to previous page
@@ -25,13 +48,14 @@ function prevPage() {
 // Returning only data relevant to current page
 function pageData() {
   const startIndex = (currentPage.value - 1) * pageSize
-  return props.data.slice(startIndex, startIndex + pageSize)
+  return filteredData.value.slice(startIndex, startIndex + pageSize)
 }
 </script>
 
 <template>
   <h1>{{ title }}</h1>
   <p>{{ description }}</p>
+  <input id="search" v-model="search" placeholder="Search Table" />
   <p>Current Page: {{ currentPage }}</p>
   <table>
     <thead

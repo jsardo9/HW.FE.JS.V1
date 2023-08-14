@@ -75,4 +75,23 @@ describe('table', () => {
     expect(entries.length).toBe(1)
     expect(entries[0].text()).toContain('Bob Doe')
   })
+
+  it('filters page based on search', async () => {
+    const columnDefs = [{ name: 'Name' }]
+    const data = [{ Name: 'John Doe' }, { Name: 'Bob Doe' }]
+    const wrapper = mount(TheTable, { props: { columnDefs: columnDefs, data: data } })
+
+    // Checking rendering prior to search
+    let entries = wrapper.find('tbody').findAll('tr')
+    expect(entries.length).toBe(2)
+    expect(entries[0].text()).toContain('John Doe')
+
+    // Simulating search
+    await wrapper.find('#search').setValue('Bob')
+
+    // Checking rendering after search query
+    entries = wrapper.find('tbody').findAll('tr')
+    expect(entries.length).toBe(1)
+    expect(entries[0].text()).toContain('Bob Doe')
+  })
 })

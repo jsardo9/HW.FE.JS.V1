@@ -85,6 +85,18 @@
         "addressRegion": "NY",
         "addressPostal": "10001",
         "addressCountry": "USA"
+      },
+      {
+        "id": 8,
+        "firstName": "Henry",
+        "lastName": "Smith",
+        "dob": "1981-11-05",
+        "skills": ["HTML", "CSS"],
+        "addressStreet": "1 Main Street",
+        "addressCity": "New York",
+        "addressRegion": "NY",
+        "addressPostal": "10001",
+        "addressCountry": "USA"
       }
     ]
   }
