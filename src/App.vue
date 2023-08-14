@@ -55,7 +55,7 @@ function buildField(person, column) {
     }
     case 'list': {
       const list = person[column.field]
-      return list !== null ? list : 'None listed'
+      return list !== null ? list.join(', ') : 'None listed'
     }
     case 'address': {
       // building address from data
